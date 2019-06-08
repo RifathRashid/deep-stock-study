@@ -64,9 +64,8 @@ def build_model():
 		-metrics (see keras.io/metrics)
 """
 def get_compile_settings():
-	# The following are examples from the tutorial. TODO: replace with desired values
-	optimizer = 'adam'
-	loss = 'sparse_categorical_crossentropy'
+	optimizer = 'sgd'
+	loss = 'mean_squared_error'
 	metrics = ['accuracy']
 	return optimizer, loss, metrics
 

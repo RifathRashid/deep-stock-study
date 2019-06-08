@@ -7,6 +7,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression 
 
+import post_to_bert as pb
+
 def plot_polarity_histogram(polarity_scores, year, plot_color):
 	polarity_scores = [p[3] for p in polarity_scores]
 	values, base = np.histogram(polarity_scores, bins=40)
@@ -108,6 +110,7 @@ def print_top_results(results):
 	for tr in top_results:
 		print(tr[1], tr[0])
 
+'''
 
 twitter_data_api = tu.TwitterApiData()
 weather_data_api = wu.WeatherData()
@@ -121,7 +124,7 @@ trump_data = twitter_data_api.get_posts(year, additional_features)
 polarity_results = get_polarity_from_tweets(trump_data)
 
 
-'''
+
 
 color = ['b', 'g', 'r', 'c', 'm', 'y', 'k']
 years = [2016, 2017, 2018]
@@ -135,7 +138,7 @@ for i in range(len(years)):
 
 plt.legend()
 plt.show()
-'''
+
 
 
 symbols = iexstock_data_api.get_symbols()['symbol']
@@ -145,6 +148,17 @@ symbols = iexstock_data_api.get_symbols()['symbol']
 
 results = compare_stocks_to_tweets(symbols, polarity_results)
 print_top_results(results)
+'''
+year = 2018
+twitter_data_api = tu.TwitterApiData()
+additional_features = ['retweet_count']
+trump_data = twitter_data_api.get_posts(year, additional_features)
+be = pb.BertEncoder()
+
+for post in trump_data:
+	text = post[1]
+	post_result = be.get_bert_embedding(text)
+	print(post_result)
 
 
 

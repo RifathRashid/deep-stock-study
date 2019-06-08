@@ -81,7 +81,7 @@ def get_compile_settings():
 	Returns:
 		Trained keras model (keras model object)
 """
-def train_test_model(train_obs, train_labels, model):
+def train_model(train_obs, train_labels, model):
 	my_optimizer, my_loss, my_metrics = get_compile_settings()
 	model.compile(optimizer=my_optimizer, loss=my_loss, metrics=my_metrics)
 	model.fit(train_obs, train_labels, epochs=NUM_EPOCHS)

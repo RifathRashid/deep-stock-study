@@ -15,10 +15,7 @@ class IEXData:
 		symbols = get_symbols(output_format='pandas')
 		return symbols
 
-	def get_stock_price_for_ticker(self, company_ticker):
-		start = datetime(2018, 1, 1)
-		end = datetime(2019, 1, 1)
-
+	def get_stock_price_for_ticker(self, company_ticker, start, end):
 		df = get_historical_data(company_ticker, start, end)
 
 		results = []
@@ -33,6 +30,7 @@ class IEXData:
 
 			change = ((close_price - open_price)/(open_price))*100 
 			#change = high_price
+			change = 1 if change > 0 else 0
 			results.append((processed_date, change))
 
 		return sorted(results)

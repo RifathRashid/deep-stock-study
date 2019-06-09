@@ -32,7 +32,7 @@ def get_data():
 
 """
 	This function initializes the model. Currently it is initialized with two layers,
-	a dense ReLU layer follwed by a dense SoftMax layer, but we can add/modify layers
+	a dense ReLU layer follwed by a dense sigmoid layer, but we can add/modify layers
 	as necessary.
 
 	Args:
@@ -44,15 +44,14 @@ def get_data():
 def build_model():
 	model = keras.Sequential([
 		keras.layers.Dense(128, activation=tf.nn.relu),
-		keras.layers.Dense(10, activation=tf.nn.softmax)
+		keras.layers.Dense(1, activation=tf.nn.sigmoid)
 	])
 	return model
 
 
 """
 	This function adds settings to the model. Currently we add the optimizer, loss
-	function, and metrics. Current settings are from an example, but we can use, e.g.,
-	'sgd' for optimizer, 'mean_squared_error' for loss.
+	function, and metrics.
 
 	Args:
 		None
@@ -64,10 +63,9 @@ def build_model():
 		-metrics (see keras.io/metrics)
 """
 def get_compile_settings():
-	# The following are examples from the tutorial. TODO: replace with desired values
 	optimizer = 'adam'
-	loss = 'sparse_categorical_crossentropy'
-	metrics = ['accuracy']
+	loss = 'binary_crossentropy'
+	metrics = [metrics.binary_accurary]
 	return optimizer, loss, metrics
 
 """
@@ -81,7 +79,7 @@ def get_compile_settings():
 	Returns:
 		Trained keras model (keras model object)
 """
-def train_test_model(train_obs, train_labels, model):
+def train_model(train_obs, train_labels, model):
 	my_optimizer, my_loss, my_metrics = get_compile_settings()
 	model.compile(optimizer=my_optimizer, loss=my_loss, metrics=my_metrics)
 	model.fit(train_obs, train_labels, epochs=NUM_EPOCHS)

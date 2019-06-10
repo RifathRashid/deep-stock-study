@@ -29,10 +29,9 @@ class IEXData:
 			high_price = df[d]['high']
 
 			change = ((close_price - open_price)/(open_price))*100 
+			change = close_price
 			#change = high_price
-			change = 1 if change > 0 else 0
+			#change = 1 if change > 0 else 0
 			results.append((processed_date, change))
 
 		return sorted(results)
-
-

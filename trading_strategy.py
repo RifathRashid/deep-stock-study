@@ -7,6 +7,7 @@ import random
 import matplotlib.pyplot as plt 
 import datetime
 import numpy as np
+import os
 
 
 class MyStrategy(strategy.BacktestingStrategy):
@@ -72,13 +73,14 @@ class RandomPredictor(object):
         return x + random.uniform(-1, 1)
 
 
-def run_strategy(rp, results_dict, start_date, date_to_tweets):
+def run_strategy(rp, ticker, results_dict, start_date, date_to_tweets):
     # Load the bar feed from the CSV file
+    file_name = os.path.join('financial_data', 'EOD-' + ticker + '.csv')
     feed = quandlfeed.Feed()
-    feed.addBarsFromCSV("googl", "EOD-GOOGL.csv")
+    feed.addBarsFromCSV(ticker, file_name)
 
     # Evaluate the strategy with the feed.
-    myStrategy = MyStrategy(feed, "googl", rp, results_dict, start_date, date_to_tweets)
+    myStrategy = MyStrategy(feed, ticker, rp, results_dict, start_date, date_to_tweets)
     myStrategy.run()
     print("Final portfolio value: $%.2f" % myStrategy.getBroker().getEquity())
 

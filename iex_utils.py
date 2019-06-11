@@ -40,7 +40,7 @@ class IEXData:
 	'''
 
 	def get_stock_price_for_ticker(self, company_ticker, start, end):
-		file_name = 'EOD-' + str(company_ticker) + '.csv'
+		file_name = 'financial_data/EOD-' + str(company_ticker) + '.csv'
 		data = pd.read_csv(file_name)
 		results = []
 		for index, row in data.iterrows(): 
